@@ -1,0 +1,14 @@
+--- a/build/apr_rules.mk.in
++++ b/build/apr_rules.mk.in
+@@ -201,9 +201,11 @@
+ 
+ .c.o:
+ 	$(COMPILE) -c $<
++	$(COMPILE) -E -P -C $< -o $(patsubst %.c,%.__cpp__.c,$<)
+ 
+ .c.lo:
+ 	$(LT_COMPILE)
++	$(COMPILE) -E -P -C $< -o $(patsubst %.c,%.__cpp__.c,$<)
+ 
+ .PHONY: all all-recursive local-all install \
+ 	depend depend-recursive local-depend x-local-depend \

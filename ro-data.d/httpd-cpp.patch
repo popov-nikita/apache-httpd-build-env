@@ -1,0 +1,34 @@
+--- a/build/rules.mk.in
++++ b/build/rules.mk.in
+@@ -198,24 +198,31 @@
+ 
+ .c.o:
+ 	$(COMPILE) -c $<
++	$(COMPILE) -E -P -C $< -o $(patsubst %.c,%.__cpp__.c,$<)
+ 
+ .s.o:
+ 	$(COMPILE) -c $<
++	$(COMPILE) -E -P -C $< -o $(patsubst %.s,%.__cpp__.s,$<)
+ 
+ .c.lo:
+ 	$(LT_COMPILE)
++	$(COMPILE) -E -P -C $< -o $(patsubst %.c,%.__cpp__.c,$<)
+ 
+ .s.lo:
+ 	$(LT_COMPILE)
++	$(COMPILE) -E -P -C $< -o $(patsubst %.s,%.__cpp__.s,$<)
+ 
+ .c.slo:
+ 	$(SH_COMPILE)
++	$(BASE_CC) -E -P -C $< -o $(patsubst %.c,%.__cpp__.c,$<)
+ 
+ .$(CXX_SUFFIX).lo:
+ 	$(LT_CXX_COMPILE)
++	$(CXX_COMPILE) -E -P -C $< -o $(patsubst %.$(CXX_SUFFIX),%.__cpp__.$(CXX_SUFFIX),$<)
+ 
+ .$(CXX_SUFFIX).slo:
+ 	$(SH_CXX_COMPILE)
++	$(BASE_CXX) -E -P -C $< -o $(patsubst %.$(CXX_SUFFIX),%.__cpp__.$(CXX_SUFFIX),$<)
+ 
+ .y.c:
+ 	$(YACC) $(YFLAGS) $< && mv y.tab.c $*.c
